@@ -125,7 +125,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AutoClicker.cpp" />
-    <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="MouseHook.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HelloWorld.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AutoClicker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
