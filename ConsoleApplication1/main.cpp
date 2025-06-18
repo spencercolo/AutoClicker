@@ -1,5 +1,2 @@
-#include "AutoClicker.h"
-
-int main() {
-	AutoClicker autoClicker;
-}
+#include <Windows.h>
+#include <iostream>
