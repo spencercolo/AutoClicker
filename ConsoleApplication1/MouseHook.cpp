@@ -1,4 +1,5 @@
-#include <Windows.h>
+#define WINVER 0x0500
+#include <windows.h>
 
 HHOOK g_hHook = NULL;
 HINSTANCE g_hInstance = NULL;
