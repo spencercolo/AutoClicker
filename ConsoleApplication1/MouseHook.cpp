@@ -22,7 +22,24 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
 //Hook Installation Function
 extern "C" __declspec(dllexport) void SetHook() {
-	g_hHook = SetWindowsHookEx(WH_MOUSE_LL, MouseProc, g_hInstance, 0);
+	//check if null
+	if(!g_hHook)
+		g_hHook = SetWindowsHookEx(WH_MOUSE_LL, MouseProc, g_hInstance, 0);
 }
 
 //Hook Removal Function
+extern "C" __declspec(dllexport) void RemoveHook() {
+	//check if not null
+	if (g_hHook) {
+		UnhookWindowsHookEx(g_hHook);
+		g_hHook = NULL;
+	}
+}
+
+//DLL Entry Point
+BOOL APIENTRY DLLMAIN(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
+	if (ul_reason_for_call == DLL_PROCESS_ATTACH)
+		g_hInstance = hModule;
+
+	return TRUE;
+}
