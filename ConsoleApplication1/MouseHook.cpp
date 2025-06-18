@@ -21,4 +21,8 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
 
 //Hook Installation Function
+extern "C" __declspec(dllexport) void SetHook() {
+	g_hHook = SetWindowsHookEx(WH_MOUSE_LL, MouseProc, g_hInstance, 0);
+}
 
+//Hook Removal Function
