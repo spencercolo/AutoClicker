@@ -6,11 +6,9 @@ typedef void (*HookFunc)();
 HMODULE g_hDll = NULL;
 
 int main() {
+	
 
-	std::cout << "Hello World" << std::endl;
-	return 1;
-
-	g_hDll = LoadLibrary(L"MouseHook.dll");
+	g_hDll = LoadLibrary(L"x64\\Debug\\WindowsHook.dll");
 	if (!g_hDll) {
 		std::cerr << "Failed to load library" << std::endl;
 		return 1;
@@ -25,15 +23,22 @@ int main() {
 		SetHook();
 		std::cout << "Hook Set" << std::endl;
 
-		MSG msg;
-		while (GetMessage(&msg, NULL, 0, 0)) {
+		//MSG msg;
+		/*while (GetMessage(&msg, NULL, 0, 0)) {
 			if (GetAsyncKeyState(VK_ESCAPE))
 				break;
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+		}*/
+
+		while (true) {
+			if (GetAsyncKeyState(VK_ESCAPE))
+				break;
 		}
 
 		RemoveHook();
 		FreeLibrary(g_hDll);
 	}
+
+	return 0;
 }

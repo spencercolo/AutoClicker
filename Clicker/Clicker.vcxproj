@@ -129,6 +129,11 @@
   <ItemGroup>
     <ClInclude Include="AutoClicker.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsHook\WindowsHook.vcxproj">
+      <Project>{3f13ae01-895a-4241-9c0f-51116f8ff119}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
