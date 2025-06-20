@@ -1,4 +1,3 @@
-#define WINVER 0x0500
 #include <Windows.h>
 #include <iostream>
 
@@ -7,6 +6,10 @@ typedef void (*HookFunc)();
 HMODULE g_hDll = NULL;
 
 int main() {
+
+	std::cout << "Hello World" << std::endl;
+	return 1;
+
 	g_hDll = LoadLibrary(L"MouseHook.dll");
 	if (!g_hDll) {
 		std::cerr << "Failed to load library" << std::endl;
