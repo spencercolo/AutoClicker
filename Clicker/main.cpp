@@ -23,21 +23,18 @@ int main() {
 		SetHook();
 		std::cout << "Hook Set" << std::endl;
 
-		//MSG msg;
-		/*while (GetMessage(&msg, NULL, 0, 0)) {
+		MSG msg;
+		while (GetMessage(&msg, NULL, 0, 0)) {
 			if (GetAsyncKeyState(VK_ESCAPE))
 				break;
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-		}*/
-
-		while (true) {
-			if (GetAsyncKeyState(VK_ESCAPE))
-				break;
 		}
 
 		RemoveHook();
+		std::cout << "Hook Removed" << std::endl;
 		FreeLibrary(g_hDll);
+		std::cout << "Library Freed" << std::endl;
 	}
 
 	return 0;

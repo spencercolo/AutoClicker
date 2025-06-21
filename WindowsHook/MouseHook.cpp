@@ -16,7 +16,7 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 		if (wParam == WM_RBUTTONDOWN) {
 			MessageBox(NULL, L"Right Mouse CLick", L"Mouse Hook", MB_OK);
 		}
-	}
+	} 
 	//passes hook information to the next hook procedure
 	return CallNextHookEx(g_hHook, nCode, wParam, lParam);
 }
