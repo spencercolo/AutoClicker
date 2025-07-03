@@ -9,7 +9,21 @@ HINSTANCE g_hInstance = NULL;
 HHOOK k_hHook = NULL;
 HINSTANCE k_hInstance = NULL;
 
+bool isActive = false;
 
+void autoClick() {
+	INPUT ips[2] = {};
+	ips[0].type = INPUT_MOUSE;
+	ips[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+
+	ips[1].type = INPUT_MOUSE;
+	ips[1].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+
+
+	while (isActive) {
+		SendInput(2, ips, sizeof(INPUT));
+	}
+}
 
 //Hook Procedure
 LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -18,14 +32,11 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 		MSLLHOOKSTRUCT* pMouse = (MSLLHOOKSTRUCT*)lParam;
 		//Only display if the right mouse button is clicked
 		if (wParam == WM_RBUTTONDOWN) {
-			//MessageBox(NULL, L"Right Mouse CLick", L"Mouse Hook", MB_OK);
-			std::cout << "Right Click" << std::endl;
-			//PostMessage(HWND_BROADCAST, nCode, wParam, lParam);
-		}
+			
+			
 
-		else if (wParam == WM_KEYDOWN) {
-			std::cout << "Key Down" << std::endl;
-			PostMessage(HWND_BROADCAST, WM_KEYDOWN, wParam, lParam);
+			
+			std::cout << "Right Click" << std::endl;
 		}
 	}
 	//passes hook information to the next hook procedure
@@ -34,10 +45,19 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 	if (nCode == HC_ACTION) {
-		std::cout << "Keyboard Click" << std::endl;
-		std::cout << wParam << std::endl;
-		if (wParam == 'j')
-			std::cout << "Button F Clicked" << std::endl;
+		KBDLLHOOKSTRUCT* pKeyboard = (KBDLLHOOKSTRUCT*)lParam;
+		if (wParam == WM_KEYDOWN) {
+			std::cout << "Keyboard Click" << std::endl;
+
+			if (pKeyboard->vkCode == VK_ESCAPE) {
+				std::cout << "Button Escape Clicked" << std::endl;
+				//MessageBox(NULL, L"Escape Clicked", L"Message!", MB_OK);
+			}
+
+			else if (pKeyboard->vkCode == VK_ADD) {
+				MessageBox(NULL, L"Press Escape to Close the Program", L"Instruction", MB_OK);
+			}
+		}
 	}
 
 	return CallNextHookEx(k_hHook, nCode, wParam, lParam);
