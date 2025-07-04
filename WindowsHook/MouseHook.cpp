@@ -1,6 +1,9 @@
 #include "pch.h"
 #include <windows.h>
 #include <iostream>
+#include <mutex>
+#include <thread>
+#include <atomic>
 
 
 HHOOK g_hHook = NULL;
@@ -10,6 +13,8 @@ HHOOK k_hHook = NULL;
 HINSTANCE k_hInstance = NULL;
 
 bool isActive = false;
+std::atomic<int> check{1};
+std::mutex mtx;
 
 void autoClick() {
 	INPUT ips[2] = {};
@@ -20,8 +25,12 @@ void autoClick() {
 	ips[1].mi.dwFlags = MOUSEEVENTF_LEFTUP;
 
 
-	while (isActive) {
-		SendInput(2, ips, sizeof(INPUT));
+	while (true) {
+		if (check % 2 == 0) {
+			//Sleep(20);
+			SendInput(2, ips, sizeof(INPUT));
+		}
+		else break;
 	}
 }
 
@@ -31,12 +40,16 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 	if (nCode == HC_ACTION) {
 		MSLLHOOKSTRUCT* pMouse = (MSLLHOOKSTRUCT*)lParam;
 		//Only display if the right mouse button is clicked
-		if (wParam == WM_RBUTTONDOWN) {
-			
-			
+		if (wParam == WM_MBUTTONDOWN) {
+			if (check % 2 == 1) {
+				std::thread t1(autoClick);
+				check++;
+			}
 
-			
-			std::cout << "Right Click" << std::endl;
+			else if (check % 2 == 0) {
+				check++;
+			}
+			std::cout << "Middle Click" << std::endl;
 		}
 	}
 	//passes hook information to the next hook procedure
