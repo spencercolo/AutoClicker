@@ -27,7 +27,7 @@ void autoClick() {
 
 	while (true) {
 		if (check % 2 == 0) {
-			//Sleep(20);
+			Sleep(13);
 			SendInput(2, ips, sizeof(INPUT));
 		}
 		else break;
@@ -43,6 +43,7 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 		if (wParam == WM_MBUTTONDOWN) {
 			if (check % 2 == 1) {
 				std::thread t1(autoClick);
+				t1.detach();
 				check++;
 			}
 
